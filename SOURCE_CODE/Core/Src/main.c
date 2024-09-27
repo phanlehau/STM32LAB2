@@ -252,7 +252,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 int counter = 50;
 int current_display = 0;
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
+void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim)
 {
 counter--;
 if(counter <=0)
@@ -261,17 +261,16 @@ if(counter <=0)
        switch(current_display){
        case 0:
     	              // Enable first display, disable second
-    	              HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);  // EN1 -> low (active)
-    	              HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);    // EN2 -> high (inactive)
+    	              HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_RESET);
+    	              HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, GPIO_PIN_SET);
     	              // Display number "1" on first 7-segment
     	              display7SEG(1);
     	              current_display = 1;
     	              break;
        case 1:
     	              // Enable second display, disable first
-    	              HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);    // EN1 -> high (inactive)
-    	              HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);  // EN2 -> low (active)
-
+    	              HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
+    	              HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, GPIO_PIN_RESET);
     	              // Display number "2" on second 7-segment
     	              display7SEG(2);
     	              current_display = 0;
