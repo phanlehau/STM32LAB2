@@ -25,6 +25,9 @@
 const int MAX_LED = 4;
 int index_led = 0;
 int led_buffer [4] = {1 , 2 , 3 , 4};
+GPIO_TypeDef* LED_PORT[4] = {EN1_GPIO_Port, EN2_GPIO_Port, EN3_GPIO_Port, EN4_GPIO_Port};
+uint16_t LED_PIN[4] = {EN1_Pin, EN2_Pin, EN3_Pin, EN4_Pin};
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -281,7 +284,18 @@ void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
 counter--;
 if(counter <=0)
 {
-   update7SEG(index_led++);
+	if(index_led <=0)
+	{
+	HAL_GPIO_WritePin ( LED_PORT[3] , LED_PIN[3] , GPIO_PIN_SET);
+	HAL_GPIO_WritePin ( LED_PORT[0] , LED_PIN[0] , GPIO_PIN_RESET);
+	update7SEG(index_led++);
+	}
+	else
+	{
+	HAL_GPIO_WritePin ( LED_PORT[index_led-1] , LED_PIN[index_led-1] , GPIO_PIN_SET);
+	HAL_GPIO_WritePin ( LED_PORT[index_led] , LED_PIN[index_led] , GPIO_PIN_RESET);
+	update7SEG(index_led++);
+	}
    if(index_led >=4) index_led = 0;
    counter = 50;
 }
