@@ -22,7 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+const int MAX_LED = 4;
+int index_led = 0;
+int led_buffer [4] = {1 , 2 , 3 , 4};
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -81,6 +83,25 @@ void display7SEG(int number) {
   HAL_GPIO_WritePin(LED_6_GPIO_Port, LED_6_Pin, (digit & 0x20) ? GPIO_PIN_RESET : GPIO_PIN_SET);
   HAL_GPIO_WritePin(LED_7_GPIO_Port, LED_7_Pin, (digit & 0x40) ? GPIO_PIN_RESET : GPIO_PIN_SET);
 }
+void update7SEG ( int index ) {
+switch ( index ) {
+case 0:
+    display7SEG(led_buffer[0]);
+break ;
+case 1:
+    display7SEG(led_buffer[1]);
+break ;
+case 2:
+    display7SEG(led_buffer[2]);
+break ;
+case 3:
+    display7SEG(led_buffer[3]);
+break ;
+default :
+break ;
+}
+}
+
 
 /* USER CODE END 0 */
 
@@ -255,61 +276,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 int counter = 50;
-int counter1 = 100;
-int current_display = 0;
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
 {
 counter--;
-counter1--;
 if(counter <=0)
 {
-	    if(counter1 <= 0)
-	    {
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		counter1 = 100;
-	    }
-       switch(current_display){
-       case 0:
-    	              // Enable first display, disable second
-    	              HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_RESET);
-    	              HAL_GPIO_WritePin(EN4_GPIO_Port, EN4_Pin, GPIO_PIN_SET);
-    	              // Display number "1" on first 7-segment
-    	              display7SEG(1);
-    	              current_display = 1;
-    	              break;
-       case 1:
-    	              // Enable second display, disable first
-                      HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, GPIO_PIN_RESET);
-                      HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
-
-    	              // Display number "2" on second 7-segment
-    	              display7SEG(2);
-    	              current_display = 2;
-
-    	              break;
-       case 2:
-    	              // Enable first display, disable second
-                      HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, GPIO_PIN_RESET);
-                      HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, GPIO_PIN_SET);
-    	              // Display number "1" on first 7-segment
-    	              display7SEG(3);
-    	              current_display = 3;
-    	              break;
-       case 3:
-    	              // Enable second display, disable first
-                      HAL_GPIO_WritePin(EN4_GPIO_Port, EN4_Pin, GPIO_PIN_RESET);
-                      HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, GPIO_PIN_SET);
-    	              // Display number "2" on second 7-segment
-    	              display7SEG(0);
-    	              current_display = 0;
-
-    	              break;
-       default:
-    	              break;
-
-       }
-       counter = 50;
+   update7SEG(index_led++);
+   if(index_led >=4) index_led = 0;
+   counter = 50;
 }
 }
 /* USER CODE END 4 */
