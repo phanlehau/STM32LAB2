@@ -24,10 +24,10 @@
 /* USER CODE BEGIN Includes */
 const int MAX_LED = 4;
 int index_led = 0;
-int led_buffer [4] = {1 , 2 , 3 , 4};
+int led_buffer [4];
 GPIO_TypeDef* LED_PORT[4] = {EN1_GPIO_Port, EN2_GPIO_Port, EN3_GPIO_Port, EN4_GPIO_Port};
 uint16_t LED_PIN[4] = {EN1_Pin, EN2_Pin, EN3_Pin, EN4_Pin};
-
+int hour = 15 , minute = 8 , second = 50;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,6 +104,37 @@ default :
 break ;
 }
 }
+void updateClockBuffer()
+{
+	if(hour >= 10 && minute >= 10)
+	{
+		led_buffer [0] = hour / 10;
+		led_buffer [1] = hour % 10;
+		led_buffer [2] = minute / 10;
+		led_buffer [3] = minute % 10;
+	}
+	else if(minute < 10)
+	{
+		led_buffer [0] = hour / 10;
+		led_buffer [1] = hour % 10;
+		led_buffer [2] = 0;
+		led_buffer [3] = minute;
+	}
+	else if(hour < 10)
+	{
+		led_buffer [0] = 0;
+		led_buffer [1] = hour;
+		led_buffer [2] = minute / 10;
+		led_buffer [3] = minute % 10 ;
+	}
+	else
+	{
+		led_buffer [0] = 0;
+		led_buffer [1] = hour;
+		led_buffer [2] = 0;
+		led_buffer [3] = minute;
+	}
+}
 
 
 /* USER CODE END 0 */
@@ -149,9 +180,20 @@ int main(void)
   HAL_GPIO_TogglePin(EN1_GPIO_Port, EN1_Pin);
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+	  second ++;
+	  if ( second >= 60) {
+	  second = 0;
+	  minute ++;
+	  }
+	  if( minute >= 60) {
+	  minute = 0;
+	  hour++;
+	  }
+	  if( hour >=24) {
+	  hour = 0;
+	  }
+	  updateClockBuffer () ;
+	  HAL_Delay (1000) ;
   }
   /* USER CODE END 3 */
 }
