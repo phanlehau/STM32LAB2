@@ -61,6 +61,22 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int timer_counter[3];
+int timer_flag[3];
+int TIMER_CYCLE = 10;
+void setTimer (int number ,int duration ) {
+timer_counter[number] = duration / TIMER_CYCLE ;
+timer_flag[number] = 0;
+}
+void timer_run () {
+for(int i = 0;i<2;i++)
+{
+if( timer_counter[i] > 0) {
+timer_counter[i]--;
+if( timer_counter[i] == 0) timer_flag[i] = 1;
+}
+}
+}
 const uint8_t seven_seg_digits[] = {
   0b00111111, // So 0
   0b00000110, // So 1
@@ -178,8 +194,13 @@ int main(void)
   HAL_GPIO_TogglePin(EN3_GPIO_Port, EN3_Pin);
   HAL_GPIO_TogglePin(EN2_GPIO_Port, EN2_Pin);
   HAL_GPIO_TogglePin(EN1_GPIO_Port, EN1_Pin);
+  setTimer(0,1000) ;
+  setTimer(1,250) ;
+  setTimer(2,1000) ;
   while (1)
   {
+	  if(timer_flag[0] == 1)
+		{
 	  second ++;
 	  if ( second >= 60) {
 	  second = 0;
@@ -193,7 +214,34 @@ int main(void)
 	  hour = 0;
 	  }
 	  updateClockBuffer () ;
-	  HAL_Delay (1000) ;
+	  setTimer(0,1000) ;
+		}
+	  if(timer_flag[1] == 1)
+		{
+			if(index_led <=0)
+			{
+			HAL_GPIO_WritePin ( LED_PORT[3] , LED_PIN[3] , GPIO_PIN_SET);
+			HAL_GPIO_WritePin ( LED_PORT[0] , LED_PIN[0] , GPIO_PIN_RESET);
+			update7SEG(index_led++);
+			}
+			else
+			{
+			HAL_GPIO_WritePin ( LED_PORT[index_led-1] , LED_PIN[index_led-1] , GPIO_PIN_SET);
+			HAL_GPIO_WritePin ( LED_PORT[index_led] , LED_PIN[index_led] , GPIO_PIN_RESET);
+			update7SEG(index_led++);
+			}
+		   if(index_led >=4) index_led = 0;
+	  setTimer(1,250) ;
+		}
+	  if(timer_flag[2] == 1)
+		{
+			HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	  setTimer(2,1000) ;
+		}
+
+
+
   }
   /* USER CODE END 3 */
 }
@@ -324,33 +372,7 @@ int counter = 25;
 int counter1 = 100;
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
 {
-counter--;
-counter1--;
-
-if(counter <=0)
-{
-    if(counter1 <= 0)
-	    {
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		counter1 = 100;
-	    }
-
-	if(index_led <=0)
-	{
-	HAL_GPIO_WritePin ( LED_PORT[3] , LED_PIN[3] , GPIO_PIN_SET);
-	HAL_GPIO_WritePin ( LED_PORT[0] , LED_PIN[0] , GPIO_PIN_RESET);
-	update7SEG(index_led++);
-	}
-	else
-	{
-	HAL_GPIO_WritePin ( LED_PORT[index_led-1] , LED_PIN[index_led-1] , GPIO_PIN_SET);
-	HAL_GPIO_WritePin ( LED_PORT[index_led] , LED_PIN[index_led] , GPIO_PIN_RESET);
-	update7SEG(index_led++);
-	}
-   if(index_led >=4) index_led = 0;
-   counter = 25;
-}
+	timer_run();
 }
 /* USER CODE END 4 */
 
