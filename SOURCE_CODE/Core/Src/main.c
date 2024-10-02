@@ -27,7 +27,7 @@ int index_led = 0;
 int led_buffer [4];
 GPIO_TypeDef* LED_PORT[4] = {EN1_GPIO_Port, EN2_GPIO_Port, EN3_GPIO_Port, EN4_GPIO_Port};
 uint16_t LED_PIN[4] = {EN1_Pin, EN2_Pin, EN3_Pin, EN4_Pin};
-int hour = 15 , minute = 8 , second = 50;
+int hour = 23 , minute = 59 , second = 57;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -197,6 +197,7 @@ int main(void)
   setTimer(0,1000) ;
   setTimer(1,250) ;
   setTimer(2,1000) ;
+  updateClockBuffer();
   while (1)
   {
 	  if(timer_flag[0] == 1)
@@ -239,9 +240,6 @@ int main(void)
 			HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	  setTimer(2,1000) ;
 		}
-
-
-
   }
   /* USER CODE END 3 */
 }
@@ -368,8 +366,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 25;
-int counter1 = 100;
 void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
 {
 	timer_run();
