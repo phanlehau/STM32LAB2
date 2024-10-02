@@ -1,0 +1,6 @@
+exercise5.c:23:6:display7SEG	24	static
+exercise5.c:36:6:update7SEG	16	static
+exercise5.c:54:6:updateClockBuffer	4	static
+exercise5.c:86:6:init_exercise5	8	static
+exercise5.c:93:6:exercise5_run	8	static
+exercise5.c:109:6:timer	8	static
