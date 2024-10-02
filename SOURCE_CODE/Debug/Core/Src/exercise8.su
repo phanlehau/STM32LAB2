@@ -1,0 +1,7 @@
+exercise8.c:27:6:setTimer	16	static
+exercise8.c:31:6:timer_run	16	static
+exercise8.c:41:6:display7SEG	24	static
+exercise8.c:54:6:update7SEG	16	static
+exercise8.c:72:6:updateClockBuffer	4	static
+exercise8.c:104:6:init_exercise8	8	static
+exercise8.c:115:6:exercise8_run	8	static
