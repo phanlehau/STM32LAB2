@@ -1,4 +1,4 @@
-#include "exercise10.h"
+#include "exercise9.h"
 
 uint8_t matrix_buffer[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66};
 GPIO_TypeDef* ROW_PORT[8] = {ROW0_GPIO_Port, ROW1_GPIO_Port, ROW2_GPIO_Port, ROW3_GPIO_Port, ROW4_GPIO_Port, ROW5_GPIO_Port, ROW6_GPIO_Port, ROW7_GPIO_Port};
@@ -8,14 +8,8 @@ uint16_t COL_PIN[8] = {ENM0_Pin, ENM1_Pin, ENM2_Pin, ENM3_Pin, ENM4_Pin, ENM5_Pi
 void init_exercise10(){
 }
 
-void updateLEDMatrix() {
-    for (int i = 0; i < 8; i++) {
-        uint8_t first_bit = (matrix_buffer[i] >> 7) & 1; // Get the first bit
-        matrix_buffer[i] = matrix_buffer[i] << 1;       // Shift left
-        if (first_bit == 1) {
-            matrix_buffer[i] |= 0b00000001;               // Set the LSB if the first bit was 1
-        }
-    }
+init_exercise9(){
+	displayLEDMatrix();
 }
 
 void displayLEDMatrix() {
@@ -39,9 +33,7 @@ void displayLEDMatrix() {
 }
 
 
-void exercise10_run(){
-	updateLEDMatrix();
-	displayLEDMatrix();
+void exercise9_run(){
 }
 
 

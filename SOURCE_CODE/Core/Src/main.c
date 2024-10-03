@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "exercise10.h"
+#include "exercise9.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,12 +93,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  init_exercise10();
+  init_exercise9();
   while (1)
   {
     /* USER CODE END WHILE */
-	  exercise10_run();
-	  HAL_Delay(50);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

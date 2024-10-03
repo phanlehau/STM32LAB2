@@ -3,9 +3,8 @@
 
 #include "main.h"
 
-void init_exercise10();
-void updateLEDMatrix();
+void init_exercise9();
 void displayLEDMatrix();
-void exercise10_run();
+void exercise9_run();
 
 #endif

@@ -1,0 +1,4 @@
+exercise9.c:8:6:init_exercise10	4	static
+exercise9.c:11:1:init_exercise9	8	static
+exercise9.c:15:6:displayLEDMatrix	24	static
+exercise9.c:36:6:exercise9_run	4	static
