@@ -4,7 +4,7 @@ int index_led = 0;
 int led_buffer [4];
 GPIO_TypeDef* LED_PORT[4] = {EN1_GPIO_Port, EN2_GPIO_Port, EN3_GPIO_Port, EN4_GPIO_Port};
 uint16_t LED_PIN[4] = {EN1_Pin, EN2_Pin, EN3_Pin, EN4_Pin};
-int hour = 23 , minute = 59 , second = 57;
+int hour = 15 , minute = 8 , second = 50;
 int counter = 25;
 int counter1 = 100;
 const uint8_t seven_seg_digits[] = {
