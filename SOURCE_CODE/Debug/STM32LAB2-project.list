@@ -116,7 +116,7 @@ void timer_run () {
  8000188:	b480      	push	{r7}
  800018a:	b083      	sub	sp, #12
  800018c:	af00      	add	r7, sp, #0
-for(int i = 0;i<2;i++)
+for(int i = 0;i<=2;i++)
  800018e:	2300      	movs	r3, #0
  8000190:	607b      	str	r3, [r7, #4]
  8000192:	e01c      	b.n	80001ce <timer_run+0x46>
@@ -145,12 +145,12 @@ if( timer_counter[i] == 0) timer_flag[i] = 1;
  80001c0:	687b      	ldr	r3, [r7, #4]
  80001c2:	2101      	movs	r1, #1
  80001c4:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-for(int i = 0;i<2;i++)
+for(int i = 0;i<=2;i++)
  80001c8:	687b      	ldr	r3, [r7, #4]
  80001ca:	3301      	adds	r3, #1
  80001cc:	607b      	str	r3, [r7, #4]
  80001ce:	687b      	ldr	r3, [r7, #4]
- 80001d0:	2b01      	cmp	r3, #1
+ 80001d0:	2b02      	cmp	r3, #2
  80001d2:	dddf      	ble.n	8000194 <timer_run+0xc>
 }
 }
@@ -569,6 +569,7 @@ void init_exercise8(){
 void exercise8_run(){
  80004c8:	b580      	push	{r7, lr}
  80004ca:	af00      	add	r7, sp, #0
+	// hien thi led 7 doan
 	if(timer_flag[1] == 1)
  80004cc:	4b49      	ldr	r3, [pc, #292]	; (80005f4 <exercise8_run+0x12c>)
  80004ce:	685b      	ldr	r3, [r3, #4]
@@ -657,6 +658,7 @@ void exercise8_run(){
  800056a:	2001      	movs	r0, #1
  800056c:	f7ff fdee 	bl	800014c <setTimer>
 			}
+	// cap nhat thoi gian
 		  if(timer_flag[0] == 1)
  8000570:	4b20      	ldr	r3, [pc, #128]	; (80005f4 <exercise8_run+0x12c>)
  8000572:	681b      	ldr	r3, [r3, #0]
@@ -718,6 +720,7 @@ void exercise8_run(){
  80005c8:	2000      	movs	r0, #0
  80005ca:	f7ff fdbf 	bl	800014c <setTimer>
 			}
+	// cap nhat den led
 		  if(timer_flag[2] == 1)
  80005ce:	4b09      	ldr	r3, [pc, #36]	; (80005f4 <exercise8_run+0x12c>)
  80005d0:	689b      	ldr	r3, [r3, #8]

@@ -29,7 +29,7 @@ timer_counter[number] = duration / TIMER_CYCLE ;
 timer_flag[number] = 0;
 }
 void timer_run () {
-for(int i = 0;i<2;i++)
+for(int i = 0;i<=2;i++)
 {
 if( timer_counter[i] > 0) {
 timer_counter[i]--;
@@ -113,6 +113,7 @@ void init_exercise8(){
 }
 
 void exercise8_run(){
+	// hien thi led 7 doan
 	if(timer_flag[1] == 1)
 			{
 				if(index_led <=0)
@@ -130,6 +131,7 @@ void exercise8_run(){
 			   if(index_led >=4) index_led = 0;
 		  setTimer(1,250) ;
 			}
+	// cap nhat thoi gian
 		  if(timer_flag[0] == 1)
 			{
 		  second ++;
@@ -147,6 +149,7 @@ void exercise8_run(){
 		  updateClockBuffer () ;
 		  setTimer(0,1000) ;
 			}
+	// cap nhat den led
 		  if(timer_flag[2] == 1)
 			{
 				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
